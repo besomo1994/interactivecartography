@@ -16,12 +16,13 @@
 		<script type="text/javascript">
 			var map = L.map('mymap', {
 			center: [41.968759, -87.717127],
-			zoom: 14
+			zoom: 20
 			});
-			L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
-			attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
-			maxZoom: 14,
-			minZoom: 4
+			L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			maxZoom: 20,
+			id: 'mapbox.satellite',
+			accessToken: 'pk.eyJ1IjoiYmVzb21vIiwiYSI6ImNrZjBqbHcybTBpYmsycWwzd2pldGZ6ZjIifQ.xV1aH9BE4cumrrXoaQW5Uw'
 			}).addTo(map);
 
 		</script>
