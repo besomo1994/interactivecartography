@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab 2</title>
+		
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
+    </head>
+
+    <body>
+        <div id="map" style="height: 500px"></div>
+
+        <script type="text/javascript">
+
+          var map = L.map('map', {
+              center: [38.16, -96.96],
+              zoom: 4
+          });
+
+          L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+               attribution: '@ <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+               maxZoom: 48,
+               minZoom: 4
+            }).addTo(map);
+			var foodIcon1 = L.icon({
+			iconUrl: 'https://www.flaticon.com/svg/static/icons/svg/1322/1322978.svg', // url that links to the icon image file
+			iconSize:     [38, 38], // size of the icon image in pixels
+			iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+			popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+            });         
+            var foodIcon2 = L.icon({
+			iconUrl: 'https://www.flaticon.com/svg/static/icons/svg/3075/3075929.svg', // url that links to the icon image file
+			iconSize:     [38, 38], // size of the icon image in pixels
+			iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+			popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+            });
+            var foodIcon3 = L.icon({
+			iconUrl: 'https://www.flaticon.com/svg/static/icons/svg/3081/3081377.svg', // url that links to the icon image file
+			iconSize:     [38, 38], // size of the icon image in pixels
+			iconAnchor:   [19, 19], // the top left corner of the icon will be aligned so that this point is at the marker's geographical location
+			popupAnchor:  [0, -10] // point from which the popup should open, relative to the iconAnchor
+            });
+			var marker1 = L.marker([41.968687, -87.717134], {icon: foodIcon1}).addTo(map);
+			var marker2 = L.marker([41.939480, -87.700420], {icon: foodIcon2}).addTo(map);
+			var marker3 = L.marker([41.903300, -87.675104], {icon: foodIcon3}).addTo(map);
+			var pic1 = '<img src="https://media-cdn.tripadvisor.com/media/photo-s/0d/a3/5b/8f/front-of-entrance-to.jpg" alt="TSL" width="250">';
+			var pic2 = '<img src="https://media.bizj.us/view/img/11264718/5163856723388127296867433133386424359845888n*1024xx750-423-0-0.jpg" alt="KC" width="250">';
+			var pic3 = '<img src="https://media-cdn.tripadvisor.com/media/photo-s/12/f3/2b/0e/photo1jpg.jpg" alt="ST" width="250">';
+
+			marker1.bindPopup('<p style="color:red; font-weight:bold"> Torteria San Lenchito </p>' + pic1);
+			marker2.bindPopup('<p style="color:blue; font-weight:bold"> Kumas Corner </p>' + pic2);
+            marker3.bindPopup('<p style="color:black; font-weight:bold"> Sushi Taku</p>' + pic3);
+        </script>
+   </body>
+</html>
