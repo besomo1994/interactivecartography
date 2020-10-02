@@ -2,6 +2,7 @@
 <html>
     <head>
       <script type="text/javascript" src="datail.js"></script>
+      <script type="text/javascript" src="datami.js"></script>
       <title>Lab 4</title>
 
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -30,6 +31,7 @@
               opacity: 0.7;
           }
         </style>
+        <h1>Illinois and Michicgan Counties</h1>
     </head>
 
     <body>
@@ -42,24 +44,28 @@
               center: [40.63,-89.39],
               zoom: 6
           });
-          var canvas = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-   attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
+          var canvas = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+   attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
    maxZoom: 11,
-   minZoom: 5
+   minZoom: 5,
+   id: 'mapbox.terrain-rgb',
+   accessToken:'pk.eyJ1IjoiYmVzb21vIiwiYSI6ImNrZnFncmtrODJncWUydW56OXFwaW1ncG4ifQ.nQN4FnoHi10hzr6-JBnkVg'
  }).addTo(map);
 
  var imagery = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
    attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
    maxZoom: 11,
    minZoom: 5,
-   id: 'mapbox.satellite',
+   id: 'mapbox.mapbox-streets-v8',
    accessToken:'pk.eyJ1IjoiYmVzb21vIiwiYSI6ImNrZnFncmtrODJncWUydW56OXFwaW1ncG4ifQ.nQN4FnoHi10hzr6-JBnkVg'
  });
-         L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-           attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
-           maxZoom: 11,
-           minZoom: 5
-         }).addTo(map);
+ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+   attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Imagery © Mapbox',
+   maxZoom: 11,
+   minZoom: 5,
+   id: 'mapbox.terrain-rgb',
+   accessToken:'pk.eyJ1IjoiYmVzb21vIiwiYSI6ImNrZnFncmtrODJncWUydW56OXFwaW1ncG4ifQ.nQN4FnoHi10hzr6-JBnkVg'
+ }).addTo(map);
          function getColor(value) {
          return value > 5484 ? '#67000d':
            value > 2757  ? '#a50f15':
@@ -103,6 +109,7 @@
 }
 var geojson; // define a variable to make the geojson layer accessible for the funtion to use  
 var boroughs = L.geoJson(data, {style:style}).addTo(map); 
+var michigan = L.geoJson(data1, {style:style}).addTo(map); 
             
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
@@ -113,13 +120,7 @@ function onEachFeature(feature, layer) {
         mouseout: resetHighlight,    // Do what defined by the resetHighlight function on mouseout
     });
 }
-geojson = L.geoJson(data, {
-    style:style,
-    onEachFeature: onEachFeature
-}).bindPopup(function (layer){
-    return layer.feature.properties.County 
-           + '<p style="color:purple">' + layer.feature.properties.TotPopDens.toString() + ' people/hectare </p>';       
-}).addTo(map);
+
     
         var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
 
@@ -143,24 +144,26 @@ geojson = L.geoJson(data, {
 
 legend.addTo(map);
 var basemaps = {
-    "Light Canvas": canvas,
-    "Satellite Imagery": imagery
+    "Terrain": canvas,
+    "Streets": imagery
 };
 
 var overlaymaps = {
-    "Illinois Counties": boroughs
+    "Illinois Counties": boroughs,
+    "Michicgan Counties":michigan
+
 };
 L.control.layers(basemaps, overlaymaps).addTo(map);
 // Removing the legend when the layer is removed
 map.on('overlayremove', function(eventLayer){
-  if (eventLayer.name == 'London Boroughs'){ // We use the key/display name to refer to the layer
+  if (eventLayer.name == 'Illinois Counties'){ // We use the key/display name to refer to the layer
     map.removeControl(legend); // legend is the variable name of the layer legend
   }
 });
 
 // Adding the legend when the layer is added
 map.on('overlayadd', function(eventLayer){
-  if (eventLayer.name == 'London Boroughs'){
+  if (eventLayer.name == 'Illinois Counties'){
     legend.addTo(map);
   }
 });
